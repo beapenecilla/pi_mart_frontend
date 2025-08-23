@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Scanner from "./components/Scanner";
 import Item from "./components/Item";
@@ -8,8 +8,7 @@ function App() {
   const [cart, setCart] = useState([]);
 
   // Add product to cart when scanned
-  const handleAddToCart = (product) => {
-    // If the product already exists, increase quantity
+  const handleAddToCart = (product, navigate) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.name === product.name);
       if (existing) {
@@ -22,6 +21,9 @@ function App() {
         return [...prevCart, { ...product, quantity: 1 }];
       }
     });
+
+    // ✅ Redirect to cart page after adding
+    navigate("/");
   };
 
   // Handle quantity changes from Item component
@@ -37,19 +39,21 @@ function App() {
     <Router>
       <Header /> {/* Always displayed on all pages */}
       <Routes>
-        <Route
-          path="/Scanner"
-          element={<Scanner onAddToCart={handleAddToCart} />}
-        />
+        {/* Wrap Scanner with navigate */}
+        <Route path="/Scanner" element={<ScannerWithNav onAddToCart={handleAddToCart} />} />
         <Route
           path="/"
-          element={
-            <Item cart={cart} onQuantityChange={handleQuantityChange} />
-          }
+          element={<Item cart={cart} onQuantityChange={handleQuantityChange} />}
         />
       </Routes>
     </Router>
   );
 }
+
+// ✅ Wrapper to inject navigate into Scanner
+const ScannerWithNav = ({ onAddToCart }) => {
+  const navigate = useNavigate();
+  return <Scanner onAddToCart={(product) => onAddToCart(product, navigate)} />;
+};
 
 export default App;

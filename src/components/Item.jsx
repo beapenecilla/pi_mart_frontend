@@ -1,6 +1,6 @@
 import React from "react";
 
-const Item = ({ cart, onQuantityChange }) => {
+const Item = ({ cart, onQuantityChange, onSubmit }) => {
   // Calculate total of all items
   const grandTotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -19,7 +19,7 @@ const Item = ({ cart, onQuantityChange }) => {
               margin: "0 auto",
               borderCollapse: "collapse",
               width: "80%",
-              maxWidth: "600px"
+              maxWidth: "600px",
             }}
           >
             <thead>
@@ -58,6 +58,23 @@ const Item = ({ cart, onQuantityChange }) => {
 
           {/* Display Grand Total */}
           <h3 style={{ marginTop: "15px" }}>Grand Total: ₱{grandTotal}</h3>
+
+          {/* Submit Button */}
+          <button
+            onClick={onSubmit}
+            style={{
+              marginTop: "20px",
+              padding: "10px 20px",
+              fontSize: "16px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            ✅ Submit
+          </button>
         </>
       )}
     </div>
