@@ -38,15 +38,41 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
                   <td style={{ border: "1px solid #ccc", padding: "8px" }}>{item.category}</td>
                   <td style={{ border: "1px solid #ccc", padding: "8px" }}>₱{item.price}</td>
                   <td style={{ border: "1px solid #ccc", padding: "8px" }}>
-                    <input
-                      type="number"
-                      min="1"
-                      value={item.quantity}
-                      onChange={(e) =>
-                        onQuantityChange(item.name, parseInt(e.target.value))
-                      }
-                      style={{ width: "60px", textAlign: "center" }}
-                    />
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
+                      <button
+                        onClick={() => onQuantityChange(item.name, Math.max(1, item.quantity - 1))}
+                        style={{
+                          padding: "5px 10px",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          backgroundColor: "#f0f0f0",
+                          cursor: "pointer",
+                        }}
+                      >
+                        ➖
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          onQuantityChange(item.name, parseInt(e.target.value) || 1)
+                        }
+                        style={{ width: "50px", textAlign: "center" }}
+                      />
+                      <button
+                        onClick={() => onQuantityChange(item.name, item.quantity + 1)}
+                        style={{
+                          padding: "5px 10px",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          backgroundColor: "#f0f0f0",
+                          cursor: "pointer",
+                        }}
+                      >
+                        ➕
+                      </button>
+                    </div>
                   </td>
                   <td style={{ border: "1px solid #ccc", padding: "8px" }}>
                     ₱{item.price * item.quantity}
