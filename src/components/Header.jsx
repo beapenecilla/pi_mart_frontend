@@ -42,6 +42,20 @@ const Header = () => {
         >
           Scanner
         </Link>
+
+        <Link
+  to="/cart"
+  style={{
+    color: "white",
+    margin: "0 12px",
+    textDecoration: "none",
+    fontWeight: "bold",
+    fontSize: "0.9rem"
+  }}
+>
+  Cart
+</Link>
+
       </nav>
     </header>
   );

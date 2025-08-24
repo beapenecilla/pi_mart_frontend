@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import Header from "./components/Header";
 import Scanner from "./components/Scanner";
 import Item from "./components/Item";
+import Home from "./components/Home";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -23,7 +24,7 @@ function App() {
     });
 
     // ✅ Redirect to cart page after adding
-    navigate("/");
+    navigate("/cart");
   };
 
   // Handle quantity changes from Item component
@@ -37,14 +38,11 @@ function App() {
 
   return (
     <Router>
-      <Header /> {/* Always displayed on all pages */}
+      <Header />
       <Routes>
-        {/* Wrap Scanner with navigate */}
-        <Route path="/Scanner" element={<ScannerWithNav onAddToCart={handleAddToCart} />} />
-        <Route
-          path="/"
-          element={<Item cart={cart} onQuantityChange={handleQuantityChange} />}
-        />
+        <Route path="/" element={<Home />} /> {/* ✅ Home Page */}
+        <Route path="/scanner" element={<ScannerWithNav onAddToCart={handleAddToCart} />} />
+        <Route path="/cart" element={<Item cart={cart} onQuantityChange={handleQuantityChange} />} />
       </Routes>
     </Router>
   );
