@@ -71,7 +71,7 @@ const Scanner = ({ onAddToCart }) => {
           padding: "10px 20px",
           marginBottom: "20px",
           borderRadius: "8px",
-          background: isScanning ? "#393939ff" : "#4e3c07ff",
+          background: isScanning ? "#34699A" : "#58A0C8",
           color: "white",
           border: "none",
           cursor: "pointer",
@@ -126,7 +126,7 @@ const Scanner = ({ onAddToCart }) => {
             style={{
               padding: "10px 15px",
               borderRadius: "8px",
-              background: "#264653",
+              background: "#34699A",
               color: "white",
               border: "none",
               cursor: "pointer",

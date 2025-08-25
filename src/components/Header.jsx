@@ -7,16 +7,16 @@ const Header = () => {
   return (
     <header
       style={{
+        width: "100%", // full width
         padding: "12px 16px",
-        backgroundColor: "#000000ff",
+        backgroundColor: "#113F67",
         color: "white",
-        borderRadius: "8px",
-        marginBottom: "20px",
         fontFamily: "'Poppins', sans-serif",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between", // ensures spacing between menu and title
+        justifyContent: "space-between",
         position: "relative",
+        boxSizing: "border-box", // ensures padding doesn’t exceed width
       }}
     >
       {/* Menu Button */}
@@ -24,10 +24,10 @@ const Header = () => {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           style={{
-            display: "flex",           // keeps icon + text in a row
-            alignItems: "center",      // vertical alignment
-            gap: "6px",                // space between ☰ and "Menu"
-            whiteSpace: "nowrap",      // prevents line break
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            whiteSpace: "nowrap",
             background: "#F3F4F6",
             color: "#374151",
             border: "1px solid #D1D5DB",
@@ -108,7 +108,7 @@ const Header = () => {
       >
         <h1
           style={{
-            fontSize: "1.6rem",
+            fontSize: "clamp(1.2rem, 3vw, 1.6rem)", // responsive size
             margin: "5px 0",
             fontWeight: "600",
             wordWrap: "break-word",
@@ -118,7 +118,7 @@ const Header = () => {
         </h1>
         <p
           style={{
-            fontSize: "0.95rem",
+            fontSize: "clamp(0.8rem, 2vw, 0.95rem)", // responsive size
             margin: "0",
             fontWeight: "400",
           }}

@@ -12,14 +12,30 @@ const Home = () => {
     <div
       style={{
         textAlign: "center",
-        marginTop: "60px",
+        marginTop: "10vh", // scales with screen height
         fontFamily: "'Poppins', sans-serif",
+        padding: "0 16px", // padding for small screens
       }}
     >
-      <h2 style={{ color: "#000000ff", fontSize: "1.8rem", fontWeight: "600" }}>
+      <h2
+        style={{
+          color: "#000000ff",
+          fontSize: "clamp(1.4rem, 4vw, 1.8rem)", // responsive font size
+          fontWeight: "600",
+          marginBottom: "12px",
+        }}
+      >
         Welcome to 🛍️ PiMart
       </h2>
-      <p style={{ color: "#000000ff", fontSize: "1rem", marginBottom: "20px" }}>
+      <p
+        style={{
+          color: "#000000ff",
+          fontSize: "clamp(0.9rem, 2.5vw, 1rem)", // responsive font size
+          marginBottom: "20px",
+          maxWidth: "500px", // keeps text from stretching on large screens
+          marginInline: "auto",
+        }}
+      >
         Smart Inventory & Self-Checkout System
       </p>
 
@@ -28,17 +44,18 @@ const Home = () => {
         style={{
           marginTop: "20px",
           padding: "12px 24px",
-          fontSize: "1rem",
+          fontSize: "clamp(0.9rem, 2.5vw, 1rem)", // adjusts on smaller screens
           fontWeight: "bold",
-          backgroundColor: "#5d5d5dff", // Match Header
+          backgroundColor: "#34699A",
           color: "#FAF3E0",
           border: "1px solid #D9CBBE",
           borderRadius: "8px",
           cursor: "pointer",
           transition: "0.3s",
+          width: "clamp(150px, 60%, 250px)", // button scales with screen width
         }}
-        onMouseOver={(e) => (e.target.style.backgroundColor = "#3E2C25")}
-        onMouseOut={(e) => (e.target.style.backgroundColor = "#5C4033")}
+        onMouseOver={(e) => (e.target.style.backgroundColor = "#34699A")}
+        onMouseOut={(e) => (e.target.style.backgroundColor = "#58A0C8")}
       >
         Start Shopping
       </button>
