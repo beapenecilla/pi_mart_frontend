@@ -8,31 +8,28 @@ const Header = () => {
     <header
       style={{
         padding: "12px 16px",
-        backgroundColor: "#000000ff", // neutral gray tone
+        backgroundColor: "#000000ff",
         color: "white",
         borderRadius: "8px",
         marginBottom: "20px",
-        position: "relative",
         fontFamily: "'Poppins', sans-serif",
         display: "flex",
-        alignItems: "center", // aligns contents vertically center
-        justifyContent: "center", // keeps title centered
+        alignItems: "center",
+        justifyContent: "space-between", // ensures spacing between menu and title
+        position: "relative",
       }}
     >
-      {/* Dropdown Button (Left Corner but vertically centered) */}
-      <div
-        style={{
-          position: "absolute",
-          left: "16px",
-          top: "50%",
-          transform: "translateY(-50%)", // centers button shape vertically
-        }}
-      >
+      {/* Menu Button */}
+      <div>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           style={{
-            background: "#F3F4F6", // light gray
-            color: "#374151", // dark gray text
+            display: "flex",           // keeps icon + text in a row
+            alignItems: "center",      // vertical alignment
+            gap: "6px",                // space between ☰ and "Menu"
+            whiteSpace: "nowrap",      // prevents line break
+            background: "#F3F4F6",
+            color: "#374151",
             border: "1px solid #D1D5DB",
             padding: "8px 14px",
             borderRadius: "6px",
@@ -41,15 +38,16 @@ const Header = () => {
             fontFamily: "'Poppins', sans-serif",
           }}
         >
-          ☰ Menu
+          <span style={{ fontSize: "1.2rem" }}>☰</span>
+          <span>Menu</span>
         </button>
 
         {menuOpen && (
           <div
             style={{
               position: "absolute",
-              top: "50px",
-              left: "0",
+              top: "60px",
+              left: "16px",
               backgroundColor: "#F3F4F6",
               border: "1px solid #D1D5DB",
               borderRadius: "6px",
@@ -67,7 +65,6 @@ const Header = () => {
                 textDecoration: "none",
                 color: "#374151",
                 fontWeight: "500",
-                fontFamily: "'Poppins', sans-serif",
               }}
             >
               🏠 Home
@@ -81,7 +78,6 @@ const Header = () => {
                 textDecoration: "none",
                 color: "#374151",
                 fontWeight: "500",
-                fontFamily: "'Poppins', sans-serif",
               }}
             >
               📷 Scanner
@@ -95,7 +91,6 @@ const Header = () => {
                 textDecoration: "none",
                 color: "#374151",
                 fontWeight: "500",
-                fontFamily: "'Poppins', sans-serif",
               }}
             >
               🛒 Cart
@@ -104,15 +99,36 @@ const Header = () => {
         )}
       </div>
 
-      {/* Title (Centered) */}
-      <div style={{ textAlign: "center" }}>
-        <h1 style={{ fontSize: "1.6rem", margin: "5px 0", fontWeight: "600" }}>
+      {/* Title (Centered using flex-grow) */}
+      <div
+        style={{
+          flexGrow: 1,
+          textAlign: "center",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "1.6rem",
+            margin: "5px 0",
+            fontWeight: "600",
+            wordWrap: "break-word",
+          }}
+        >
           🛍️ PiMart
         </h1>
-        <p style={{ fontSize: "0.95rem", margin: "0", fontWeight: "400" }}>
+        <p
+          style={{
+            fontSize: "0.95rem",
+            margin: "0",
+            fontWeight: "400",
+          }}
+        >
           Smart Inventory & Self-Checkout
         </p>
       </div>
+
+      {/* Spacer (keeps symmetry so text stays centered) */}
+      <div style={{ width: "72px" }}></div>
     </header>
   );
 };
