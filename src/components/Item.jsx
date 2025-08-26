@@ -32,83 +32,51 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
         <p style={{ color: "#7B6F5A" }}>No items scanned yet.</p>
       ) : (
         <>
-          {/* Responsive Table Wrapper */}
-          <div style={{ width: "100%", overflow: "hidden" }}>
-            <table
+          {cart.map((item, index) => (
+            <div
+              key={index}
               style={{
-                margin: "0 auto",
-                borderCollapse: "collapse",
-                width: "100%",
-                tableLayout: "fixed", // ensures it always fits
+                marginBottom: "20px",
                 backgroundColor: "#FAF3E0",
                 border: "1px solid #D9CBBE",
                 borderRadius: "10px",
-                overflow: "hidden",
+                padding: "12px",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                textAlign: "left",
               }}
             >
-              <thead style={{ backgroundColor: "#34699A", color: "#FAF3E0" }}>
-                <tr>
-                  {["Item", "Category", "Price", "Quantity", "Total"].map(
-                    (col, i) => (
-                      <th
-                        key={i}
-                        style={{
-                          padding: "10px",
-                          fontSize: "clamp(10px, 2vw, 14px)",
-                          wordWrap: "break-word",
-                        }}
-                      >
-                        {col}
-                      </th>
-                    )
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {cart.map((item, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      borderBottom: "1px solid #000000ff",
-                    }}
-                  >
-                    <td
-                      style={{
-                        padding: "10px",
-                        fontSize: "clamp(10px, 2vw, 14px)",
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      {item.name}
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontSize: "clamp(10px, 2vw, 14px)",
+                }}
+              >
+                <tbody>
+                  <tr>
+                    <td style={{ fontWeight: "600", padding: "6px" }}>Item</td>
+                    <td style={{ padding: "6px" }}>{item.name}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: "600", padding: "6px" }}>
+                      Category
                     </td>
-                    <td
-                      style={{
-                        padding: "10px",
-                        fontSize: "clamp(10px, 2vw, 14px)",
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      {item.category}
+                    <td style={{ padding: "6px" }}>{item.category}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: "600", padding: "6px" }}>Price</td>
+                    <td style={{ padding: "6px" }}>₱{item.price}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: "600", padding: "6px" }}>
+                      Quantity
                     </td>
-                    <td
-                      style={{
-                        padding: "10px",
-                        fontSize: "clamp(10px, 2vw, 14px)",
-                      }}
-                    >
-                      ₱{item.price}
-                    </td>
-
-                    {/* ✅ Fixed Quantity Controls */}
-                    <td style={{ padding: "10px" }}>
+                    <td style={{ padding: "6px" }}>
                       <div
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          justifyContent: "center",
                           gap: "4px",
-                          flexWrap: "nowrap",
                         }}
                       >
                         <button
@@ -119,13 +87,12 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
                             )
                           }
                           style={{
-                            padding: "2px 6px",   // smaller size
+                            padding: "2px 6px",
                             fontSize: "0.75rem",
                             border: "1px solid #D9CBBE",
                             borderRadius: "4px",
                             backgroundColor: "#EADBC8",
                             cursor: "pointer",
-                            flexShrink: 0,
                           }}
                         >
                           ➖
@@ -141,7 +108,7 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
                             )
                           }
                           style={{
-                            width: "38px", // smaller input
+                            width: "38px",
                             textAlign: "center",
                             border: "1px solid #D9CBBE",
                             borderRadius: "4px",
@@ -155,33 +122,29 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
                             onQuantityChange(item.name, item.quantity + 1)
                           }
                           style={{
-                            padding: "2px 6px",   // smaller size
+                            padding: "2px 6px",
                             fontSize: "0.75rem",
                             border: "1px solid #D9CBBE",
                             borderRadius: "4px",
                             backgroundColor: "#58A0C8",
                             cursor: "pointer",
-                            flexShrink: 0,
                           }}
                         >
                           ➕
                         </button>
                       </div>
                     </td>
-
-                    <td
-                      style={{
-                        padding: "10px",
-                        fontSize: "clamp(10px, 2vw, 14px)",
-                      }}
-                    >
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: "600", padding: "6px" }}>Total</td>
+                    <td style={{ padding: "6px" }}>
                       ₱{item.price * item.quantity}
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </tbody>
+              </table>
+            </div>
+          ))}
 
           {/* Display Grand Total */}
           <h3
