@@ -26,43 +26,41 @@ const Item = ({ cart, onQuantityChange, onDelete, onSubmit }) => {
         boxSizing: "border-box",
       }}
     >
-      {/* Header with Scan Button + Title */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          marginBottom: "15px",
-          gap: "12px",
-        }}
-      >
-        <button
-          onClick={handleScan}
-          style={{
-            padding: "8px 16px",
-            fontSize: "0.9rem",
-            fontWeight: "600",
-            backgroundColor: "#34699A",
-            color: "#FAF3E0",
-            border: "1px solid #D9CBBE",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          + Scan Item
-        </button>
+{/* Header with Scan Button + Title */}
+<div style={{ marginBottom: "15px" }}>
+  {/* Top row: Scan Item button */}
+  <div style={{ textAlign: "left" }}>
+    <button
+      onClick={handleScan}
+      style={{
+        padding: "8px 16px",
+        fontSize: "clamp(0.8rem, 2vw, 0.9rem)",
+        fontWeight: "600",
+        backgroundColor: "#34699A",
+        color: "#FAF3E0",
+        border: "1px solid #D9CBBE",
+        borderRadius: "6px",
+        cursor: "pointer",
+      }}
+    >
+      + Scan Item
+    </button>
+  </div>
 
-        <h2
-          style={{
-            fontSize: "clamp(1.2rem, 4vw, 1.6rem)",
-            fontWeight: "600",
-            margin: 0,
-            marginRight: "50px",
-          }}
-        >
-          🛒 Shopping Cart
-        </h2>
-      </div>
+  {/* Second row: Shopping Cart title */}
+  <h2
+    style={{
+      textAlign: "center",
+      fontSize: "clamp(1.2rem, 4vw, 1.6rem)",
+      fontWeight: "600",
+      margin: "10px 0 0 0",
+    }}
+  >
+    🛒 Shopping Cart
+  </h2>
+</div>
+
+
 
       {cart.length === 0 ? (
         <p style={{ color: "#7B6F5A" }}>No items scanned yet.</p>

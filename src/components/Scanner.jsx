@@ -6,20 +6,20 @@ const Scanner = ({ onAddToCart }) => {
   const [product, setProduct] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
   const [controls, setControls] = useState(null);
-  const [scanningStatus, setScanningStatus] = useState(""); // 👈 New state
+  const [scanningStatus, setScanningStatus] = useState("");
 
   // Fake database (replace later with API or DB)
   const mockDatabase = {
     "12345": { name: "Coca-Cola", category: "Beverage", price: 25 },
     "67890": { name: "Oreo", category: "Snacks", price: 15 },
-    "11111": { name: "Lays", category: "Snacks", price: 20 }
+    "11111": { name: "Lays", category: "Snacks", price: 20 },
   };
 
   useEffect(() => {
     const codeReader = new BrowserMultiFormatReader();
 
     if (isScanning) {
-      setScanningStatus("scanning"); // 👈 Show scanning status
+      setScanningStatus("scanning");
       const c = codeReader.decodeFromVideoDevice(
         null,
         videoRef.current,
@@ -33,7 +33,6 @@ const Scanner = ({ onAddToCart }) => {
             };
             setProduct(foundProduct);
 
-            // 👇 Show success animation before popup
             setScanningStatus("success");
             setTimeout(() => setScanningStatus("done"), 800);
           }
@@ -44,7 +43,7 @@ const Scanner = ({ onAddToCart }) => {
       if (controls && typeof controls.stop === "function") {
         controls.stop();
       }
-      setScanningStatus(""); // Reset when camera stops
+      setScanningStatus("");
     }
 
     return () => {
@@ -91,49 +90,59 @@ const Scanner = ({ onAddToCart }) => {
       </button>
 
       {/* ✅ Camera with scanning overlay */}
-      <div style={{ position: "relative", display: "flex", justifyContent: "center" }}>
-        <video
-          ref={videoRef}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
           style={{
+            position: "relative",
             width: "100%",
             maxWidth: "400px",
-            border: "2px solid #ccc",
             borderRadius: "12px",
-            display: isScanning ? "block" : "none",
+            overflow: "hidden", // 👈 keeps line inside rounded corners
+            border: "2px solid #ccc",
             boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
           }}
-        />
-
-        {/* 🔴 Scanning animation */}
-        {isScanning && scanningStatus === "scanning" && (
-          <div
+        >
+          <video
+            ref={videoRef}
             style={{
-              position: "absolute",
-              top: "10%",
-              width: "90%",
-              height: "4px",
-              background: "red",
-              animation: "scanline 2s linear infinite",
-              borderRadius: "2px",
-            }}
-          />
-        )}
-
-        {/* ✅ Success flash */}
-        {scanningStatus === "success" && (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0, 255, 0, 0.4)",
+              width: "100%",
+              display: isScanning ? "block" : "none",
               borderRadius: "12px",
-              animation: "flash 0.6s ease-out",
             }}
           />
-        )}
+
+          {/* 🔴 Scanning animation */}
+          {isScanning && scanningStatus === "scanning" && (
+            <div
+              style={{
+                position: "absolute",
+                left: "5%",
+                right: "5%",
+                height: "3px",
+                background: "red",
+                borderRadius: "3px",
+                boxShadow: "0 0 8px rgba(255,0,0,0.7)", // 👈 glowing laser effect
+                animation: "scanline 2s linear infinite",
+              }}
+            />
+          )}
+
+          {/* ✅ Success flash */}
+          {scanningStatus === "success" && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: "rgba(0, 255, 0, 0.4)",
+                borderRadius: "12px",
+                animation: "flash 0.6s ease-out",
+              }}
+            />
+          )}
+        </div>
       </div>
 
       {/* ✅ Product popup after scan */}
@@ -184,9 +193,9 @@ const Scanner = ({ onAddToCart }) => {
       <style>
         {`
           @keyframes scanline {
-            0% { top: 10%; }
-            50% { top: 80%; }
-            100% { top: 10%; }
+            0% { top: 5%; }
+            50% { top: 85%; }
+            100% { top: 5%; }
           }
           @keyframes flash {
             from { opacity: 1; }
