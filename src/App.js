@@ -8,7 +8,7 @@ import Home from "./components/Home";
 function App() {
   const [cart, setCart] = useState([]);
 
-  // Add product to cart when scanned
+  // ✅ Add product to cart when scanned
   const handleAddToCart = (product, navigate) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.name === product.name);
@@ -27,7 +27,7 @@ function App() {
     navigate("/cart");
   };
 
-  // Handle quantity changes from Item component
+  // ✅ Handle quantity changes
   const handleQuantityChange = (itemName, newQuantity) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -36,13 +36,34 @@ function App() {
     );
   };
 
+  // ✅ Delete item from cart
+  const handleDelete = (itemName) => {
+    setCart((prevCart) => prevCart.filter((item) => item.name !== itemName));
+  };
+
+  // ✅ Submit checkout (clear cart)
+  const handleSubmit = () => {
+    alert("Checkout submitted!");
+    setCart([]);
+  };
+
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} /> {/* ✅ Home Page */}
         <Route path="/scanner" element={<ScannerWithNav onAddToCart={handleAddToCart} />} />
-        <Route path="/cart" element={<Item cart={cart} onQuantityChange={handleQuantityChange} />} />
+        <Route
+          path="/cart"
+          element={
+            <Item
+              cart={cart}
+              onQuantityChange={handleQuantityChange}
+              onDelete={handleDelete}   // 👈 pass delete
+              onSubmit={handleSubmit}   // 👈 pass submit
+            />
+          }
+        />
       </Routes>
     </Router>
   );

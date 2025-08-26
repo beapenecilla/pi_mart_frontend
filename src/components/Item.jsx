@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Item = ({ cart, onQuantityChange, onSubmit }) => {
+const Item = ({ cart, onQuantityChange, onDelete, onSubmit }) => {
   const navigate = useNavigate();
 
   // Redirect to scanner page
@@ -57,7 +57,7 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
             fontSize: "clamp(1.2rem, 4vw, 1.6rem)",
             fontWeight: "600",
             margin: 0,
-            marginRight: "50px"
+            marginRight: "50px",
           }}
         >
           🛒 Shopping Cart
@@ -79,8 +79,28 @@ const Item = ({ cart, onQuantityChange, onSubmit }) => {
                 padding: "12px",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
                 textAlign: "left",
+                position: "relative",
               }}
             >
+              {/* Delete button inside the item container */}
+              <button
+                onClick={() => onDelete(item.name)}
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  backgroundColor: "#E74C3C",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "6px",
+                  padding: "4px 8px",
+                  fontSize: "0.75rem",
+                  cursor: "pointer",
+                }}
+              >
+                ✖
+              </button>
+
               <table
                 style={{
                   width: "100%",
