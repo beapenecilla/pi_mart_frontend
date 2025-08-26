@@ -39,7 +39,6 @@ const Header = () => {
           }}
         >
           <span style={{ fontSize: "1.2rem" }}>☰</span>
-          <span>Menu</span>
         </button>
 
         {menuOpen && (

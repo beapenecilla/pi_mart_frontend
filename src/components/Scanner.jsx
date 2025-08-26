@@ -4,8 +4,9 @@ import { BrowserMultiFormatReader } from "@zxing/browser";
 const Scanner = ({ onAddToCart }) => {
   const videoRef = useRef(null);
   const [product, setProduct] = useState(null);
-  const [isScanning, setIsScanning] = useState(false); 
+  const [isScanning, setIsScanning] = useState(false);
   const [controls, setControls] = useState(null);
+  const [scanningStatus, setScanningStatus] = useState(""); // 👈 New state
 
   // Fake database (replace later with API or DB)
   const mockDatabase = {
@@ -18,6 +19,7 @@ const Scanner = ({ onAddToCart }) => {
     const codeReader = new BrowserMultiFormatReader();
 
     if (isScanning) {
+      setScanningStatus("scanning"); // 👈 Show scanning status
       const c = codeReader.decodeFromVideoDevice(
         null,
         videoRef.current,
@@ -30,6 +32,10 @@ const Scanner = ({ onAddToCart }) => {
               price: 0,
             };
             setProduct(foundProduct);
+
+            // 👇 Show success animation before popup
+            setScanningStatus("success");
+            setTimeout(() => setScanningStatus("done"), 800);
           }
         }
       );
@@ -38,6 +44,7 @@ const Scanner = ({ onAddToCart }) => {
       if (controls && typeof controls.stop === "function") {
         controls.stop();
       }
+      setScanningStatus(""); // Reset when camera stops
     }
 
     return () => {
@@ -52,7 +59,7 @@ const Scanner = ({ onAddToCart }) => {
       style={{
         textAlign: "center",
         marginTop: "20px",
-        fontFamily: "'Poppins', sans-serif", // ✅ Same font as Home.jsx
+        fontFamily: "'Poppins', sans-serif",
       }}
     >
       <h2
@@ -83,8 +90,8 @@ const Scanner = ({ onAddToCart }) => {
         {isScanning ? "Stop Camera" : "Start Camera"}
       </button>
 
-      {/* ✅ Centered Video */}
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      {/* ✅ Camera with scanning overlay */}
+      <div style={{ position: "relative", display: "flex", justifyContent: "center" }}>
         <video
           ref={videoRef}
           style={{
@@ -96,9 +103,41 @@ const Scanner = ({ onAddToCart }) => {
             boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
           }}
         />
+
+        {/* 🔴 Scanning animation */}
+        {isScanning && scanningStatus === "scanning" && (
+          <div
+            style={{
+              position: "absolute",
+              top: "10%",
+              width: "90%",
+              height: "4px",
+              background: "red",
+              animation: "scanline 2s linear infinite",
+              borderRadius: "2px",
+            }}
+          />
+        )}
+
+        {/* ✅ Success flash */}
+        {scanningStatus === "success" && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(0, 255, 0, 0.4)",
+              borderRadius: "12px",
+              animation: "flash 0.6s ease-out",
+            }}
+          />
+        )}
       </div>
 
-      {product && (
+      {/* ✅ Product popup after scan */}
+      {product && scanningStatus === "done" && (
         <div
           style={{
             border: "1px solid #ddd",
@@ -110,6 +149,7 @@ const Scanner = ({ onAddToCart }) => {
             marginRight: "auto",
             boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
             background: "#fff",
+            animation: "fadeIn 0.5s ease-in-out",
           }}
         >
           <h3 style={{ fontSize: "22px", marginBottom: "10px" }}>
@@ -139,6 +179,25 @@ const Scanner = ({ onAddToCart }) => {
           </button>
         </div>
       )}
+
+      {/* 🔑 Animations */}
+      <style>
+        {`
+          @keyframes scanline {
+            0% { top: 10%; }
+            50% { top: 80%; }
+            100% { top: 10%; }
+          }
+          @keyframes flash {
+            from { opacity: 1; }
+            to { opacity: 0; }
+          }
+          @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+          }
+        `}
+      </style>
     </div>
   );
 };
